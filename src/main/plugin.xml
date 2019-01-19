@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin id="${id}" version="${version}">
+  <feature extension="dita.conductor.lib.import" file="lib/${name}.jar"/>
+  <feature extension="dita.xsl.conref" file="xsl/conref.xsl"/>
+  <feature extension="dita.xsl.maplink" file="xsl/maplink.xsl"/>
+  <feature extension="dita.xsl.mapref" file="xsl/mapref.xsl"/>
+  <feature extension="dita.xsl.mappull" file="xsl/mappull.xsl"/>
+  <feature extension="dita.preprocess.debug-filter.param" file="debug-filter.xml"/>
+  <feature extension="dita.preprocess.map-reader.param" file="debug-filter.xml"/>
+  <feature extension="dita.preprocess.topic-reader.param" file="debug-filter.xml"/>
+</plugin>

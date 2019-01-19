@@ -1,0 +1,74 @@
+apply plugin: 'java'
+apply plugin: 'maven-publish'
+
+group = 'com.elovirta'
+version = '1.0.0'
+
+description = """DITA Open Toolkit XSLT stylesheet optimizer plug-in."""
+
+repositories {
+    mavenCentral()
+    jcenter()
+    mavenLocal()
+}
+dependencies {
+    implementation group: 'org.dita-ot', name: 'dost', version: '3.3.0-SNAPSHOT'
+    testImplementation group: 'junit', name: 'junit', version:'4.12'
+    testImplementation group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
+}
+
+jar.archiveName = "${project.name}.jar"
+task dist(type: Zip) {
+    from(configurations.runtime.allArtifacts.files) {
+        into "lib"
+    }
+//    from(configurations.runtime) {
+//        include { details -> details.file.name.contains('flexmark') }
+//        exclude { details -> details.file.name.contains('flexmark-all') }
+//        exclude { details -> details.file.name.contains('flexmark-ext-emoji') }
+//        exclude { details -> details.file.name.contains('flexmark-ext-gfm-issues') }
+//        exclude { details -> details.file.name.contains('flexmark-ext-gfm-users') }
+//        exclude { details -> details.file.name.contains('flexmark-ext-xwiki-macros') }
+//        exclude { details -> details.file.name.contains('flexmark-pdf') }
+//        include { details -> details.file.name.contains('autolink') }
+//        include { details -> details.file.name.contains('htmlparser') }
+//        into "lib"
+//    }
+    from("src/main") {
+        include "plugin.xml"
+        expand(
+                id: "${project.group}.${project.name}",
+                name: project.name,
+                version: project.version
+        )
+    }
+    from("src/main") {
+        include "debug-filter.xml"
+        include "xsl/**"
+//        include "conductor.xml"
+        // Template generated files
+//        exclude "build.xml"
+    }
+//    from("src/main/resources") {
+//        include "*.xsl"
+//        exclude "specialize.xsl"
+//        // Template generated files
+//        exclude "dita2markdown.xsl"
+//        exclude "map2markdown-cover.xsl"
+//        rename '(.*)', 'xsl/$1'
+//    }
+//    from("licenses") {
+//        include "*.txt"
+//        into "lib"
+//    }
+    from(".") {
+        include "LICENSE"
+    }
+//    from(".") {
+//        include "NOTICES"
+//        expand(
+//                year: new Date().format('yyyy')
+//        )
+//    }
+    archiveName "${project.name}-${project.version}.zip"
+}
