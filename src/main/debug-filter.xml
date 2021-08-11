@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<dummy>
-  <filter class="org.dita.dost.writer.NameGeneralizationFilter"/>
+<dummy xmlns:if="ant:if">
+  <filter class="org.dita.dost.writer.NameGeneralizationFilter" if:set="generalise-element-name"/>
 </dummy>

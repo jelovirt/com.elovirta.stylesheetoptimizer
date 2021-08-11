@@ -1,6 +1,6 @@
 package org.dita.dost.platform;
 
-import org.dita.dost.TestUtils;
+import org.dita.dost.TestLogger;
 import org.dita.dost.util.XMLUtils;
 import org.junit.Test;
 import org.xml.sax.Attributes;
@@ -17,61 +17,60 @@ public class StylesheetOptimizerFilterTest {
 
     public StylesheetOptimizerFilterTest() {
         f = new StylesheetOptimizerFilter(true);
-        f.setLogger(new TestUtils.TestLogger());
+        f.setLogger(new TestLogger());
     }
 
     @Test
-    public void testBase() throws Exception {
+    public void testBase() {
         assertEquals("topic",
                 f.optimizeAttributeValue("*[contains(@class, ' topic/topic ')]"));
     }
 
     @Test
-    public void testStructuralSpecialization() throws Exception {
-        assertEquals("*[contains(@class, ' task/task ')]",
+    public void testStructuralSpecialization() {
+        assertEquals("topic[contains(@class, ' task/task ')]",
                 f.optimizeAttributeValue("*[contains(@class, ' task/task ')]"));
     }
 
     @Test
-    public void testDomainSpecialization() throws Exception {
+    public void testDomainSpecialization() {
         assertEquals("ph[contains(@class, ' hi-d/b ')]",
                 f.optimizeAttributeValue("*[contains(@class, ' hi-d/b ')]"));
     }
 
-    // FIXME
     @Test
-    public void testWhitespace() throws Exception {
-        assertEquals(" * [ contains( @class ,  ' hi-d/b ' ) ] ",
+    public void testWhitespace() {
+        assertEquals(" ph[contains(@class, ' hi-d/b ')] ",
                 f.optimizeAttributeValue(" * [ contains( @class ,  ' hi-d/b ' ) ] "));
     }
 
     @Test
-    public void testPredicate() throws Exception {
+    public void testPredicate() {
         assertEquals("ph[contains(@class, ' hi-d/b ')][exists(@id)]",
                 f.optimizeAttributeValue("*[contains(@class, ' hi-d/b ')][exists(@id)]"));
     }
 
     @Test
-    public void testSteps() throws Exception {
+    public void testSteps() {
         assertEquals("topic/body",
                 f.optimizeAttributeValue("*[contains(@class, ' topic/topic ')]/*[contains(@class, ' topic/body ')]"));
     }
 
     @Test
-    public void testElementTypeDomainSpecialization() throws Exception {
+    public void testElementTypeDomainSpecialization() {
         assertEquals("element(ph)",
                 f.optimizeTypeAttributeValue("element(b)"));
     }
 
     @Test
-    public void testElementTypeStructuralSpecialization() throws Exception {
+    public void testElementTypeStructuralSpecialization() {
         assertEquals("element(strow)",
                 f.optimizeTypeAttributeValue("element(property)"));
     }
 
     // FIXME
     @Test
-    public void testElementTypeWhitespace() throws Exception {
+    public void testElementTypeWhitespace() {
         assertEquals(" element ( b ) ",
                 f.optimizeTypeAttributeValue(" element ( b ) "));
     }
@@ -81,7 +80,7 @@ public class StylesheetOptimizerFilterTest {
         f.setContentHandler(new DefaultHandler() {
             @Override
             public void startElement(String uri, String localName,
-                                     String qName, Attributes attributes) throws SAXException {
+                                     String qName, Attributes attributes) {
                 assertEquals("ph", localName);
             }
         });
@@ -96,7 +95,7 @@ public class StylesheetOptimizerFilterTest {
         f.setContentHandler(new DefaultHandler() {
             @Override
             public void startElement(String uri, String localName,
-                                     String qName, Attributes attributes) throws SAXException {
+                                     String qName, Attributes attributes) {
                 assertEquals("b", localName);
             }
         });
@@ -111,7 +110,7 @@ public class StylesheetOptimizerFilterTest {
         f.setContentHandler(new DefaultHandler() {
             @Override
             public void startElement(String uri, String localName,
-                                     String qName, Attributes attributes) throws SAXException {
+                                     String qName, Attributes attributes) {
                 assertEquals("ph[contains(@class, ' hi-d/b ')]", attributes.getValue("select"));
             }
         });
@@ -126,7 +125,7 @@ public class StylesheetOptimizerFilterTest {
         f.setContentHandler(new DefaultHandler() {
             @Override
             public void startElement(String uri, String localName,
-                                     String qName, Attributes attributes) throws SAXException {
+                                     String qName, Attributes attributes) {
                 assertEquals("element(ph)", attributes.getValue("as"));
             }
         });

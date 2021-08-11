@@ -17,7 +17,8 @@ import static org.dita.dost.util.Configuration.configuration;
 public class StylesheetOptimizer implements CustomIntegrator {
 
     public static final String XSL_EXTENSION = ".xsl";
-    public static final String TEMPLATE_XSL_EXTENSION = "_template" + XSL_EXTENSION;
+    public static final String TEMPLATE_PREFIX = "_template.";
+    public static final String TEMPLATE_XSL_EXTENSION = TEMPLATE_PREFIX + "xsl";
     public static final String ORIGINAL_XSL_EXTENSION = "_original" + XSL_EXTENSION;
     public static final String OPTIMIZED_XSL_EXTENSION = ".optimized" + XSL_EXTENSION;
 

@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<plugin id="${id}" version="${version}">
-  <feature extension="dita.conductor.lib.import" file="lib/${name}.jar"/>
+<plugin id="com.elovirta.stylesheetoptimizer" version="${version}">
+  <feature extension="ant.import" file="build.xml"/>
+  <feature extension="dita.conductor.lib.import" file="lib/stylesheetoptimizer.jar"/>
+  <transtype name="base" abstract="true" desc="Common">
+    <param desc="Generalise element names during preprocessing" name="generalise-element-name" type="enum">
+      <val>true</val>
+      <val default="true">false</val>
+    </param>
+  </transtype>
   <feature extension="dita.xsl.conref" file="xsl/conref.xsl"/>
   <feature extension="dita.xsl.maplink" file="xsl/maplink.xsl"/>
   <feature extension="dita.xsl.mapref" file="xsl/mapref.xsl"/>
